@@ -1,0 +1,141 @@
+<!-- finanzARG -->
+
+
+<!DOCTYPE html>
+<html id="pagina">
+<head>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-QDNRJ04CJB"></script>
+	<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'G-QDNRJ04CJB');
+	</script>
+	<title>FinanzARG</title>
+	<link rel="icon" type="image/x-icon" href="img/logo.png">
+	<link href="css/index.css" rel="stylesheet" type="text/css"/>
+
+	<div class="loader" id="loader" style="display: block;">
+		<style>
+			html {
+			    width: 100%;
+			    height: 100%;
+			}
+			.loader {
+			  border: 5px solid #f3f3f3;
+			  border-radius: 50%;
+			  border-top: 5px solid #3498db;
+			  width: 50px;
+			  height: 50px;
+			  margin-left: 125px;
+			  margin-top: 175px;
+			  -webkit-animation: spin 0.5s linear infinite; /* Safari */
+			  animation: spin 0.5s linear infinite;
+			}
+			
+
+			/* Safari */
+			@-webkit-keyframes spin {
+			  0% { -webkit-transform: rotate(0deg); }
+			  100% { -webkit-transform: rotate(360deg); }
+			}
+
+			@keyframes spin {
+			  0% { transform: rotate(0deg); }
+			  100% { transform: rotate(360deg); }
+			}
+		</style>
+	</div>
+	<div id="navbar" style="display: none;" class="navbar">
+		<tr><img src="img/logo.png" style="height: 50px; width: 50px; border-radius: 40%; border: 1px solid black;"></tr>
+		<tr style="margin-top: 30%; border: 2px solid red;"><h1 data-heading="FinanzARG">FinanzARG</h1>
+			</tr>
+	  </div>
+	<!-- <div id="navbar" style="display: none;" class="navbar">
+		<img src="img/logo.png" style="height: 50px; width: 50px; border-radius: 40%; vertical-align: middle;">&nbsp;&nbsp;&nbsp;FinanzARG
+	</div> -->
+	<div class="tab" style="margin-left: 10px; margin-top: 5%; display: none;" id="botones">
+		<button class="tablinks" id="btnDolar" style="display: inline;">DOLAR</button>
+		<button class="tablinks" id="btnCripto" style="display: inline;">CRIPTO</button>
+		<button class="tablinks" id="btnUsdt" style="display: inline;">USDT/USDC</button>
+		<button class="tablinks" id="btnMerval" style="display: inline;">MERVAL</button>
+	</div>
+
+</head>
+
+<body id="body_dolar" class="dark" style="margin-left: 10px;">
+	<div>
+		<table class="dataframe mystyle" style="display: block;">
+			<thead></thead>
+			<tbody id="tbody_dolar" style="display: none;">
+				<tr>
+					<th style="column-width: 100px;"></th>
+					<th style="column-width: 100px;">COMPRA</th>
+					<th style="column-width: 100px;">VENTA</th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+
+
+<body id="body_cripto" class="dark">
+	<div>
+		<table class="mystyle2" id="tabla_cripto" style="display: none;">
+			<thead>
+				<tr style="text-align: center;" class="tr1">
+					<th>COIN</th>
+					<th>PRICE</th>
+					<th>% 1h</th>
+					<th id="sort_day">% 1d</th>
+					<th id="sort_week">% 1w</th>
+				</tr>
+			</thead>
+			<tbody id="tbody">	
+			</tbody>
+			
+			
+	</div>
+</body>
+
+
+<body id="body_usdt" class="dark" >
+	<div>
+		<table class="mystyle3" id="usdt_ars_table" style="display: none; margin-left: 5px;">
+		<tbody id="usdt_ars_table" style="padding-left: 30px; ">
+			<tr>
+				<th>EXCHANGE</th>
+				<th>COMPRA</th>
+				<th>VENTA</th>
+			</tr>
+		</tbody>
+	</div>
+</body>
+
+
+
+
+<body id="body_merval" class="dark" >
+	<div>
+		<table class="mystyle4" id="tabla_merval" style="display: none; margin-left: 5px;">
+			<thead>
+				<tr style="text-align: center;" class="tr1">
+					<th>ACCION</th>
+					<th>PRECIO (ARS)</th>
+					<th>% 1d</th>
+					<th>MKT CAP (ARS)</th>
+				</tr>
+			</thead>
+			<tbody>	
+			</tbody>
+		
+	</div>
+</body>
+
+
+<script src="js/index.js" type="application/javascript"></script>
+
+
+</html>
