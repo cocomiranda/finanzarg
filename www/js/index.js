@@ -316,7 +316,7 @@ async function usdt_ars() {
 
   const takenos = await fetch("https://us-central1-takenosmvp.cloudfunctions.net/getUsdToArsRate")
   const takenos_data = await takenos.json();
-  const takenos_compra = '-'
+  const takenos_compra = 0
   const takenos_venta = takenos_data.data.value;
   
   
@@ -414,7 +414,7 @@ async function usdt_ars() {
 
   function createTable2() {
     for (let i = 0; i <= len_usdt; i++) {
-      var row = '<tr><td><a id="link_' + lista_exchange[i] + '" href="' + lista_link[i] + '" target="_blank">' + lista_exchange[i] + '</td>\n<td>$ ' + lista_compra[i] + '</td><td>$ ' + lista_venta[i] + '</td></tr>';
+      var row = '<tr><td><a id="link_' + lista_exchange[i] + '" href="' + lista_link[i] + '" target="_blank">' + lista_exchange[i] + '</td>\n<td>' + lista_compra[i] + '</td><td>' + lista_venta[i] + '</td></tr>';
       let html = document.getElementById("usdt_ars_table").innerHTML + row;
       document.getElementById("usdt_ars_table").innerHTML = html;
     }
@@ -510,10 +510,6 @@ function merval() {
       }
       addClass();
     })
-
-  
-  
-
 }
 merval()
 
@@ -598,4 +594,99 @@ function toggle_merval() {
 
 
 
+/*  #######################################################################################################  */
+/*  #######################################################################################################  */
+/*  #######################################################################################################  */
 
+
+
+
+
+////////////////////////// ORDENA POR LA COLUMNA COMPRA EN USDT ////////////////////////
+document.body.addEventListener( 'click', function ( event ) {
+  if( event.target.id == 'sort_usdt_compra' ) {
+    sortCompraUsdt();
+  };
+} );
+function sortCompraUsdt() {
+  let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("usdt_ars_table");
+  switching = true;
+  dir = "desc";
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[1];
+      y = rows[i + 1].getElementsByTagName("TD")[1];
+      if (dir == "desc") {
+          if (Number(x.innerHTML) < Number(y.innerHTML)) {
+          shouldSwitch = true;
+          break;
+          }
+        } 
+        else if (dir == "asc") {
+          if (Number(x.innerHTML) > Number(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount ++;
+    } 
+    else {
+      if (switchcount == 0 && dir == "desc") {
+          dir = "asc";
+          switching = true;
+        }
+    }
+  }
+}
+//////////////////////// ORDENA POR LA COLUMNA VENTA EN USDT ////////////////////////
+document.body.addEventListener( 'click', function ( event ) {
+  if( event.target.id == 'sort_usdt_venta' ) {
+    sortVentaUsdt();
+  };
+} );
+function sortVentaUsdt() {
+  let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("usdt_ars_table");
+  switching = true;
+  dir = "desc";
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[2];
+      y = rows[i + 1].getElementsByTagName("TD")[2];
+      if (dir == "desc") {
+          if (Number(x.innerHTML) < Number(y.innerHTML)) {
+          shouldSwitch = true;
+          break;
+          }
+        } 
+        else if (dir == "asc") {
+          if (Number(x.innerHTML) > Number(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount ++;
+    } 
+    else {
+      if (switchcount == 0 && dir == "desc") {
+          dir = "asc";
+          switching = true;
+        }
+    }
+  }
+}

@@ -121,7 +121,7 @@ h1 {
     font-family: Arial;
     border-collapse: collapse; 
     text-align: center;
-    margin-bottom: 30px;
+    height: 2575px;
     border-bottom: 1px solid #000;
     width: 310px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -179,11 +179,10 @@ h1 {
     font-family: Arial;
     border-collapse: collapse; 
     text-align: center;
-    margin-bottom: 750px;
     width: 300px;
     border-bottom: 1px solid #000;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    height: 15px;
+    height: 750px;
 }
 /* primera fila */
 .mystyle3 th {
@@ -311,14 +310,14 @@ a:hover {
 .dark .mystyle3 th {
     background-color: gray;
     border-right: 1px solid #14202b;
-    border-bottom: 2px solid white;
+    border-bottom: 1px solid white;
     color: white;
 }
 
 .dark .mystyle4 th {
     background-color: grey;
     border-right: 1px solid #14202b;
-    border-bottom: 2px solid white;
+    border-bottom: 1px solid white;
 
     color: white;
 }
@@ -348,6 +347,7 @@ a:hover {
     border-collapse: collapse; 
     text-align: center;
     margin-bottom: 30px;
+    height: 1750px;
     /* border-bottom: 1px solid #000; */
     width: 300px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
