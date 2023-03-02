@@ -481,10 +481,18 @@ function merval() {
         const mkt_cap = cells[1].textContent.slice(0, -4);
         const precio = cells[2].textContent.slice(0, -4);
         const change = cells[3].textContent.slice(0, -1);
+        const signo = change[0]
+        if (isNaN(signo)) {
+          cambio = parseFloat(change.substring(1))
+          cambio = -cambio
+        }
+        else {
+          cambio = parseFloat(change)
+        }
         lista_accion.push(accion);;
         lista_mktcap.push(mkt_cap);
         lista_precio.push(precio);
-        lista_cambio.push(change);
+        lista_cambio.push(cambio);
       }
 
  
@@ -500,10 +508,10 @@ function merval() {
       function addClass() {
         let hour = document.querySelectorAll("[id^='cambio']");
         for (let i = 0; i < hour.length; i++) {
-          if (hour[i].textContent.charAt(0) > 0) {
+          if (hour[i].textContent >= 0) {
             hour[i].classList.add("positivo");
           }
-          else  {
+          if (hour[i].textContent < 0) {
             hour[i].classList.add("negativo");
           }
         }
@@ -655,6 +663,53 @@ document.body.addEventListener( 'click', function ( event ) {
 function sortVentaUsdt() {
   let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
   table = document.getElementById("usdt_ars_table");
+  switching = true;
+  dir = "desc";
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[2];
+      y = rows[i + 1].getElementsByTagName("TD")[2];
+      if (dir == "desc") {
+          if (Number(x.innerHTML) < Number(y.innerHTML)) {
+          shouldSwitch = true;
+          break;
+          }
+        } 
+        else if (dir == "asc") {
+          if (Number(x.innerHTML) > Number(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount ++;
+    } 
+    else {
+      if (switchcount == 0 && dir == "desc") {
+          dir = "asc";
+          switching = true;
+        }
+    }
+  }
+}
+
+
+
+//////////////////////// ORDENA POR LA COLUMNA %1d EN MERVAL ////////////////////////
+document.body.addEventListener( 'click', function ( event ) {
+  if( event.target.id == 'sort_merval' ) {
+    sortMerval();
+  };
+} );
+function sortMerval() {
+  let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("tabla_merval");
   switching = true;
   dir = "desc";
   while (switching) {
