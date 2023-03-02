@@ -206,15 +206,17 @@ async function cripto() {
       price = parseFloat(price);
       price = price.toFixed(3);
     }
-    if (price < 0.0001) {
+    if (price <= 0.001) {
+      console.log(symbol)
+      console.log(price)
       price_str = price.toString();
-      price_str = price_str.substring(0, 8);
-      price = parseFloat(price_str); 
+      price_str = price_str.substring(0, 7);
+      price = parseFloat(price_str);
+      console.log(price_str)
     }
     priceChange1h = coins[i].priceChange1h;
     priceChange1d = coins[i].priceChange1d;
     priceChange1w = coins[i].priceChange1w;
-
     lista_symbol.push(symbol);
     lista_icon.push(icon);
     lista_price.push(price);
@@ -228,14 +230,14 @@ async function cripto() {
     for (let i = 0; i < coins.length; i++) {
       num = i + 1;
       if (num.toString().length == 1) {
-    num = "0" + num;
-  }
-  if (num.toString().length == 2) {
-    num = "0" + num;
-  }
+        num = "0" + num;
+      }
+      if (num.toString().length == 2) {
+        num = "0" + num;
+      }
       src = lista_icon[i];
-      texto = '<img src="' + src + '" height=12 width=12>   ';
-      let row = '<tr><td id="'+ lista_symbol[i] + '">' + texto + lista_symbol[i] + '</td><td>$ ' + lista_price[i] + '</td><td id="hour">' + lista_priceChange1h[i] + '</td><td id="day">' + lista_priceChange1d[i] + '</td><td id="week">' + lista_priceChange1w[i] + '</td></tr>';
+      logo = '<img src="' + src + '" height=12 width=12>   ';
+      let row = '<tr id="tr' + i + '"><td>' + num + '</td><td class="fav">' + logo + lista_symbol[i] + '</a></td><td>' + lista_price[i] + '</td><td id="hour">' + lista_priceChange1h[i] + '</td><td id="day">' + lista_priceChange1d[i] + '</td><td id="week">' + lista_priceChange1w[i] + '</td></tr>';
       let html = document.getElementById("tbody").innerHTML + row;
       document.getElementById("tbody").innerHTML = html;
     }
@@ -744,4 +746,177 @@ function sortMerval() {
         }
     }
   }
+}
+
+
+
+// ORDENA POR LA COLUMNA '#'
+let moneda = document.getElementById("sort_num");
+moneda.addEventListener("click", sortNum);
+function sortNum() {
+	let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+	table = document.getElementById("tabla_cripto");
+	switching = true;
+	dir = "asc";
+	while (switching) {
+	    switching = false;
+	    rows = table.rows;
+	    for (i = 1; i < (rows.length - 1); i++) {
+		    shouldSwitch = false;
+		    x = rows[i].getElementsByTagName("TD")[0];
+		    y = rows[i + 1].getElementsByTagName("TD")[0];
+	      	if (dir == "asc") {
+		       	if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+				    shouldSwitch = true;
+				    break;
+		        }
+	      	} 
+	      	else if (dir == "desc") {
+	        	if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+			        shouldSwitch = true;
+			        break;
+	        	}
+	      	}
+	    }
+	    if (shouldSwitch) {
+	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	      switching = true;
+	      switchcount ++;
+	    } 
+	    else {
+			if (switchcount == 0 && dir == "asc") {
+				dir = "desc";
+				switching = true;
+			}
+	    }
+  	}
+}
+
+
+
+//////////////////////// ORDENA POR LA COLUMNA '1H' ////////////////////////
+let hora = document.getElementById("sort_hour");
+hora.addEventListener("click", sortHour);
+function sortHour() {
+	let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+	table = document.getElementById("tabla_cripto");
+	switching = true;
+	dir = "desc";
+	while (switching) {
+		switching = false;
+		rows = table.rows;
+		for (i = 1; i < (rows.length - 1); i++) {
+			shouldSwitch = false;
+			x = rows[i].getElementsByTagName("TD")[3];
+			y = rows[i + 1].getElementsByTagName("TD")[3];
+			if (dir == "desc") {
+			    if (Number(x.innerHTML) < Number(y.innerHTML)) {
+					shouldSwitch = true;
+					break;
+			    }
+		  	} 
+		  	else if (dir == "asc") {
+			    if (Number(x.innerHTML) > Number(y.innerHTML)) {
+			    	shouldSwitch = true;
+			    	break;
+			    }
+		  	}
+		}
+		if (shouldSwitch) {
+		  rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+		  switching = true;
+		  switchcount ++;
+		} 
+		else {
+			if (switchcount == 0 && dir == "desc") {
+		    	dir = "asc";
+		    	switching = true;
+		  	}
+		}
+	}
+}
+
+
+//////////////////////// ORDENA POR LA COLUMNA '1D' ////////////////////////
+let dia = document.getElementById("sort_day");
+dia.addEventListener("click", sortDay);
+function sortDay() {
+	let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+	table = document.getElementById("tabla_cripto");
+	switching = true;
+	dir = "desc";
+	while (switching) {
+	    switching = false;
+	    rows = table.rows;
+	    for (i = 1; i < (rows.length - 1); i++) {
+			shouldSwitch = false;
+			x = rows[i].getElementsByTagName("TD")[4];
+			y = rows[i + 1].getElementsByTagName("TD")[4];
+			if (dir == "desc") {
+		        if (Number(x.innerHTML) < Number(y.innerHTML)) {
+					shouldSwitch = true;
+					break;
+		        }
+	    	} 
+	    	else if (dir == "asc") {
+	        	if (Number(x.innerHTML) > Number(y.innerHTML)) {
+					shouldSwitch = true;
+					break;
+	        	}
+      		}
+	    }
+	    if (shouldSwitch) {
+			rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+			switching = true;
+			switchcount ++;
+	    }
+	    else {
+	    	if (switchcount == 0 && dir == "desc") {
+		        dir = "asc";
+		        switching = true;
+	     	}
+	    }
+  	}
+}
+
+//////////////////////// ORDENA POR LA COLUMNA '1W' ////////////////////////
+let semana = document.getElementById("sort_week");
+semana.addEventListener("click", sortWeek);
+function sortWeek() {
+	let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+	table = document.getElementById("tabla_cripto");
+	switching = true;
+	dir = "desc";
+	while (switching) {
+	    switching = false;
+	    rows = table.rows;
+	    for (i = 1; i < (rows.length - 1); i++) {
+			shouldSwitch = false;
+			x = rows[i].getElementsByTagName("TD")[5];
+			y = rows[i + 1].getElementsByTagName("TD")[5];
+			if (dir == "desc") {
+				if (Number(x.innerHTML) < Number(y.innerHTML)) {
+					shouldSwitch = true;
+					break;
+				}
+			}
+			else if (dir == "asc") {
+				if (Number(x.innerHTML) > Number(y.innerHTML)) {
+			  		shouldSwitch = true;
+			  		break;
+				}
+			}
+	    }
+	    if (shouldSwitch) {
+	      	rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	      	switching = true;
+	      	switchcount ++;
+	    }
+	    else {
+	      	if (switchcount == 0 && dir == "desc") {
+	        	dir = "asc";
+	        	switching = true;
+	      	}
+	    }
+  	}
 }

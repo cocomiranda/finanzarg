@@ -141,18 +141,21 @@ h1 {
 
 /* tamaño de las columnas */
 .mystyle2 th:nth-child(1n) {
-    column-width: 80px;
+    column-width: 30px;
 }
 .mystyle2 th:nth-child(2n) {
-    column-width: 80px;
+    column-width: 90px;
 }
 .mystyle2 th:nth-child(3n) {
-    column-width: 50px;
+    column-width: 60px;
 }
 .mystyle2 th:nth-child(4n) {
     column-width: 50px;
 }
 .mystyle2 th:nth-child(5n) {
+    column-width: 50px;
+}
+.mystyle2 th:nth-child(6n) {
     column-width: 50px;
 }
 /* primera fila */
