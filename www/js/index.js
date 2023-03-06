@@ -48,14 +48,13 @@ async function dolar() {
   const url_mep = "https://mercados.ambito.com/dolarrava/mep/variacion"
   const url_ccl = "https://mercados.ambito.com/dolarrava/cl/variacion"
   const url_mayorista = "https://mercados.ambito.com/dolar/mayorista/variacion"
-  const lista_compra1 = [];
-  const lista_venta1 = [];
   const lista_change = [];
 
   const re_oficial = await fetch(url_oficial);
   const data_oficial = await re_oficial.json();
   oficial_compra = parseFloat(data_oficial["compra"].replace(",","."))
   oficial_venta = parseFloat(data_oficial["venta"].replace(",","."))
+  oficial_cambio = parseFloat(data_oficial["variacion"].slice(0, -1).replace(",","."));
   oficial_clase = data_oficial["class-variacion"]
   lista_change.push(oficial_clase)
   oficial_avg = (parseFloat(oficial_compra) + parseFloat(oficial_venta)) / 2;
@@ -64,6 +63,7 @@ async function dolar() {
   const data_informal = await re_informal.json();
   informal_compra = parseFloat(data_informal["compra"].replace(",","."))
   informal_venta = parseFloat(data_informal["venta"].replace(",","."))
+  informal_cambio = parseFloat(data_informal["variacion"].slice(0, -1).replace(",","."));
   informal_clase = data_informal["class-variacion"]
   lista_change.push(informal_clase)
   informal_avg = (parseFloat(informal_compra) + parseFloat(informal_venta)) / 2;
@@ -72,6 +72,7 @@ async function dolar() {
   const data_ahorro = await re_ahorro.json();
   ahorro_compra = parseFloat(data_ahorro["compra"].replace(",","."))
   ahorro_venta = parseFloat(data_ahorro["venta"].replace(",","."))
+  ahorro_cambio = parseFloat(data_ahorro["variacion"].slice(0, -1).replace(",","."));
   ahorro_clase = data_ahorro["class-variacion"]
   lista_change.push(ahorro_clase)
   //////////////////////////////
@@ -79,13 +80,15 @@ async function dolar() {
   const data_turista = await re_turista.json();
   turista_compra = parseFloat(data_turista["compra"].replace(",","."))
   turista_venta = parseFloat(data_turista["venta"].replace(",","."))
-  turrista_clase = data_turista["class-variacion"]
-  lista_change.push(turrista_clase)
+  turista_cambio = parseFloat(data_turista["variacion"].slice(0, -1).replace(",","."));
+  turista_clase = data_turista["class-variacion"]
+  lista_change.push(turista_clase)
   //////////////////////////////
   const re_qatar = await fetch(url_qatar);
   const data_qatar = await re_qatar.json();
   qatar_compra = parseFloat(data_qatar["compra"].replace(",","."))
   qatar_venta = parseFloat(data_qatar["venta"].replace(",","."))
+  qatar_cambio = parseFloat(data_qatar["variacion"].slice(0, -1).replace(",","."));
   qatar_clase = data_qatar["class-variacion"]
   lista_change.push(qatar_clase)
   //////////////////////////////
@@ -93,6 +96,7 @@ async function dolar() {
   const data_mep = await re_mep.json();
   mep_compra = parseFloat(data_mep["compra"].replace(",","."))
   mep_venta = parseFloat(data_mep["venta"].replace(",","."))
+  mep_cambio = parseFloat(data_mep["variacion"].slice(0, -1).replace(",","."));
   mep_clase = data_mep["class-variacion"]
   lista_change.push(mep_clase)
   //////////////////////////////
@@ -100,6 +104,7 @@ async function dolar() {
   const data_ccl = await re_ccl.json();
   ccl_compra = parseFloat(data_ccl["compra"].replace(",","."))
   ccl_venta = parseFloat(data_ccl["venta"].replace(",","."))
+  ccl_cambio = parseFloat(data_ccl["variacion"].slice(0, -1).replace(",","."));
   ccl_clase = data_ccl["class-variacion"]
   lista_change.push(ccl_clase)
   //////////////////////////////
@@ -107,6 +112,7 @@ async function dolar() {
   const data_mayorista = await re_mayorista.json();
   mayorista_compra = parseFloat(data_mayorista["compra"].replace(",","."))
   mayorista_venta = parseFloat(data_mayorista["venta"].replace(",","."))
+  mayorista_cambio = parseFloat(data_mayorista["variacion"].slice(0, -1).replace(",","."));
   mayorista_clase = data_mayorista["class-variacion"]
   lista_change.push(mayorista_clase)
   //////////////////////////////
@@ -125,6 +131,7 @@ async function dolar() {
 
   }
   cripto_clase = oficial_clase
+  cripto_cambio = oficial_cambio
   var cripto_compra = parseFloat(((belo_c + lemon_c) / 2).toFixed(2))
   var cripto_venta = parseFloat(((belo_v + lemon_v) / 2).toFixed(2))
   lista_change.push(cripto_clase)
@@ -138,15 +145,15 @@ async function dolar() {
   // creo la tabla con las cotizaciones
   function createTable() {
     body = document.createElement('tbody_dolar');
-    var oficial = '<tr><td>OFICIAL</td>\n<td id="compra">$ ' + oficial_compra + '</td><td id="venta">$ ' + oficial_venta + '</td></tr>';
-    var informal = '<tr><td>INFORMAL</td>\n<td id="compra">$ ' + informal_compra + '</td><td id="venta">$ ' + informal_venta + '</td></tr>';
-    var ahorro = '<tr><td>AHORRO</td>\n<td id="compra">' + '-' + '</td><td id="venta">$ ' + ahorro_venta + '</td></tr>';
-    var turista = '<tr><td>TURISTA</td>\n<td id="compra">' + '-' + '</td><td id="venta">$ ' + turista_venta + '</td></tr>';
-    var qatar = '<tr><td>QATAR</td>\n<td id="compra">' + '-' + '</td><td id="venta">$ ' + qatar_venta + '</td></tr>';
-    var ccl = '<tr><td>CCL</td>\n<td id="compra">$ ' + ccl_compra + '</td><td id="venta">$ ' + ccl_venta + '</td></tr>';
-    var mep = '<tr><td>MEP</td>\n<td id="compra">$ ' + mep_compra + '</td><td id="venta">$ ' + mep_venta + '</td></tr>';
-    var mayorista = '<tr><td>MAYORISTA</td>\n<td id="compra">$ ' + mayorista_compra + '</td><td id="venta">$ ' + mayorista_venta + '</td></tr>';
-    var cripto = '<tr><td>CRIPTO</td>\n<td id="compra">$ ' + cripto_compra + '</td><td id="venta">$ ' + cripto_venta + '</td></tr>';
+    var oficial = '<tr><td>OFICIAL</td>\n<td id="compra">$ ' + oficial_compra + '</td><td id="venta">$ ' + oficial_venta + '</td><td id="cambio">' + oficial_cambio + '</td></tr>';
+    var informal = '<tr><td>INFORMAL</td>\n<td id="compra">$ ' + informal_compra + '</td><td id="venta">$ ' + informal_venta + '</td><td id="cambio">' + informal_cambio + '</td></tr>';
+    var ahorro = '<tr><td>AHORRO</td>\n<td id="compra">' + '-' + '</td><td id="venta">$ ' + ahorro_venta + '</td><td id="cambio">' + ahorro_cambio + '</td></tr>';
+    var turista = '<tr><td>TURISTA</td>\n<td id="compra">' + '-' + '</td><td id="venta">$ ' + turista_venta + '</td><td id="cambio">' + turista_cambio + '</td></tr>';
+    var qatar = '<tr><td>QATAR</td>\n<td id="compra">' + '-' + '</td><td id="venta">$ ' + qatar_venta + '</td><td id="cambio">' + qatar_cambio + '</td></tr>';
+    var ccl = '<tr><td>CCL</td>\n<td id="compra">$ ' + ccl_compra + '</td><td id="venta">$ ' + ccl_venta + '</td><td id="cambio">' + ccl_cambio + '</td></tr>';
+    var mep = '<tr><td>MEP</td>\n<td id="compra">$ ' + mep_compra + '</td><td id="venta">$ ' + mep_venta + '</td><td id="cambio">' + mep_cambio + '</td></tr>';
+    var mayorista = '<tr><td>MAYORISTA</td>\n<td id="compra">$ ' + mayorista_compra + '</td><td id="venta">$ ' + mayorista_venta + '</td><td id="cambio">' + mayorista_cambio + '</td></tr>';
+    var cripto = '<tr><td>CRIPTO</td>\n<td id="compra">$ ' + cripto_compra + '</td><td id="venta">$ ' + cripto_venta + '</td><td id="cambio">' + cripto_cambio + '</td></tr>';
     
     var html = document.getElementById("tbody_dolar").innerHTML + oficial + informal + ahorro + turista + qatar + ccl + mep + mayorista + cripto
     document.getElementById("tbody_dolar").innerHTML = html;
@@ -156,18 +163,22 @@ async function dolar() {
   function addClase() {
     let buy = document.querySelectorAll("[id^='compra']");
     let sell = document.querySelectorAll("[id^='venta']");
+    let cambio = document.querySelectorAll("[id^='cambio']");
     for (let i = 0; i < lista_change.length; i++) {
       if (lista_change[i] == 'up') {
         buy[i].classList.add("positivo");
         sell[i].classList.add("positivo");
+        cambio[i].classList.add("positivo");
       }
       if (lista_change[i] == 'down') {
         buy[i].classList.add("negativo");
         sell[i].classList.add("negativo");
+        cambio[i].classList.add("negativo");
       }
       if (lista_change[i] == 'equal') {
         buy[i].classList.add("igual");
         sell[i].classList.add("igual");
+        cambio[i].classList.add("igual");
       }
     }
   }
@@ -181,7 +192,7 @@ dolar();
 
 async function cripto() {
   
-  const url = 'https://api.coinstats.app/public/v1/coins?skip=0&limit=100&currency=USD'
+  const url = 'https://api.coinstats.app/public/v1/coins?skip=0&limit=105&currency=USD'
   const response = await fetch(url);
   const data = await response.json();
   const coins = Object.values(data)[0];
@@ -207,27 +218,26 @@ async function cripto() {
       price = price.toFixed(3);
     }
     if (price <= 0.001) {
-      console.log(symbol)
-      console.log(price)
       price_str = price.toString();
       price_str = price_str.substring(0, 7);
       price = parseFloat(price_str);
-      console.log(price_str)
     }
     priceChange1h = coins[i].priceChange1h;
     priceChange1d = coins[i].priceChange1d;
     priceChange1w = coins[i].priceChange1w;
-    lista_symbol.push(symbol);
-    lista_icon.push(icon);
-    lista_price.push(price);
-    lista_priceChange1h.push(priceChange1h);
-    lista_priceChange1d.push(priceChange1d);
-    lista_priceChange1w.push(priceChange1w);
+    if (symbol != 'FRAX3CRV-f' && symbol != 'f6-sOHM') {
+      lista_symbol.push(symbol);
+      lista_icon.push(icon);
+      lista_price.push(price);
+      lista_priceChange1h.push(priceChange1h);
+      lista_priceChange1d.push(priceChange1d);
+      lista_priceChange1w.push(priceChange1w);
+    }
   }
   
   function createTable() {
     body = document.createElement('tbody');
-    for (let i = 0; i < coins.length; i++) {
+    for (let i = 0; i < 100; i++) {
       num = i + 1;
       if (num.toString().length == 1) {
         num = "0" + num;
@@ -309,6 +319,30 @@ const link_takenos = 'https://www.takenos.com/'
 const link_tiendacrypto = "https://www.tiendacrypto.com/";
 const link_null = 'https://www.google.com.ar/';
 
+const logo_argenbtc = "img/logo_argenbtc.jpeg";
+const logo_belo = "img/logo_belo.jpeg";
+const logo_bitex = "img/logo_bitex.jpeg";
+const logo_bitmonedero = "img/logo_bitmonedero.jpeg";
+const logo_bitso = "img/logo_bitso.png";
+const logo_buenbit = "img/logo_buenbit.jpeg";
+const logo_bybit = "img/logo_bybit.jpeg";
+const logo_calypso = "img/logo_calypso.jpeg";
+const logo_copter = "img/logo_copter.jpeg";
+const logo_cryptomkt = "img/logo_cryptomkt.jpeg";
+const logo_decrypto = "img/logo_decrypto.jpeg";
+const logo_fiwind = "img/logo_fiwind.jpeg";
+const logo_kriptonmarket = "img/logo_kripton.jpeg";
+const logo_latamex = "img/logo_latamex.jpeg";
+const logo_lemoncash = "img/logo_lemon.jpeg";
+const logo_letsbit = "img/logo_letsbit.jpeg";
+const logo_pluscrypto = "img/logo_plus.jpeg";
+const logo_ripio = "img/logo_ripio.jpeg";
+const logo_ripioexchange = "img/logo_ripio.jpeg";
+const logo_saldo = "img/logo_saldo.jpeg";
+const logo_satoshitango = "img/logo_satoshitango.jpeg";
+const logo_takenos = "img/logo_takenos.jpeg";
+const logo_tiendacrypto = "img/logo_tiendacrypto.png";
+
 
 
 async function usdt_ars() {
@@ -328,6 +362,7 @@ async function usdt_ars() {
   const lista_compra = [];
   const lista_venta = [];
   const lista_link = [];
+  const lista_logo = []
 
   for (let i = 0; i < len_usdt ; i++) {
     const exchange = Object.keys(usdt_ars_data)[i];
@@ -339,69 +374,91 @@ async function usdt_ars() {
     lista_venta.push(exchange_venta);
     if (exchange == 'argenbtc') {
       lista_link.push(link_argenbtc)
+      lista_logo.push(logo_argenbtc)
     }
     if (exchange == 'belo') {
       lista_link.push(link_belo)
+      lista_logo.push(logo_belo)
     }
     if (exchange == 'bitex') {
       lista_link.push(link_bitex)
+      lista_logo.push(logo_bitex)
     }
     if (exchange == 'bitmonedero') {
       lista_link.push(link_bitmonedero)
+      lista_logo.push(logo_bitmonedero)
     }
     if (exchange == 'bitso') {
       lista_link.push(link_bitso)
+      lista_logo.push(logo_bitso)
     }
     if (exchange == 'buenbit') {
       lista_link.push(link_buenbit)
+      lista_logo.push(logo_buenbit)
     }
     if (exchange == 'bybit') {
       lista_link.push(link_bybit)
+      lista_logo.push(logo_bybit)
     }
     if (exchange == 'calypso') {
       lista_link.push(link_calypso)
+      lista_logo.push(logo_calypso)
     }
     if (exchange == 'copter') {
       lista_link.push(link_copter)
+      lista_logo.push(logo_copter)
     }
     if (exchange == 'cryptomkt') {
       lista_link.push(link_cryptomkt)
+      lista_logo.push(logo_cryptomkt)
     }
     if (exchange == 'decrypto') {
       lista_link.push(link_decrypto)
+      lista_logo.push(logo_decrypto)
     }
     if (exchange == 'fiwind') {
       lista_link.push(link_fiwind)
+      lista_logo.push(logo_fiwind)
     }
     if (exchange == 'kriptonmarket') {
       lista_link.push(link_kriptonmarket)
+      lista_logo.push(logo_kriptonmarket)
     }
     if (exchange == 'latamex') {
       lista_link.push(link_latamex)
+      lista_logo.push(logo_latamex)
     }
     if (exchange == 'lemoncash') {
       lista_link.push(link_lemoncash)
+      lista_logo.push(logo_lemoncash)
     }
     if (exchange == 'letsbit') {
       lista_link.push(link_letsbit)
+      lista_logo.push(logo_letsbit)
     }
     if (exchange == 'pluscrypto') {
       lista_link.push(link_pluscrypto)
+      lista_logo.push(logo_pluscrypto)
     }
     if (exchange == 'ripio') {
       lista_link.push(link_ripio)
+      lista_logo.push(logo_ripio)
     }
     if (exchange == 'ripioexchange') {
       lista_link.push(link_ripioexchange)
+      lista_logo.push(logo_ripioexchange)
     }
     if (exchange == 'saldo') {
       lista_link.push(link_saldo)
+      lista_logo.push(logo_saldo)
     }
     if (exchange == 'satoshitango') {
       lista_link.push(link_satoshitango)
+      lista_logo.push(logo_satoshitango)
     }
     if (exchange == 'tiendacrypto') {
       lista_link.push(link_tiendacrypto)
+      lista_logo.push(logo_tiendacrypto)
     }
     else if (exchange != 'argenbtc' && exchange != 'belo' && exchange != 'bitex' && exchange != 'bitmonedero' && exchange != 'bitso' && exchange != 'buenbit' && exchange != 'copter' && exchange != 'cryptomkt' && exchange != 'decrypto' && exchange != 'fiwind' && exchange != 'latamex' && exchange != 'lemoncash' && exchange != 'letsbit' && exchange != 'ripio' && exchange != 'ripioexchange' && exchange != 'satoshitango' && exchange != 'tiendacrypto' && exchange != 'saldo' && exchange != 'kriptonmarket' && exchange != 'bybit' && exchange != 'calypso' && exchange != 'pluscrypto')
     {
@@ -412,11 +469,14 @@ async function usdt_ars() {
   lista_compra.push(takenos_compra);
   lista_venta.push(takenos_venta);
   lista_link.push(link_takenos);
+  lista_logo.push(logo_takenos);
 
 
   function createTable2() {
     for (let i = 0; i <= len_usdt; i++) {
-      var row = '<tr><td><a id="link_' + lista_exchange[i] + '" href="' + lista_link[i] + '" target="_blank">' + lista_exchange[i] + '</td>\n<td>' + lista_compra[i] + '</td><td>' + lista_venta[i] + '</td></tr>';
+      src = lista_logo[i];
+      logo = '<img src="' + src + '" height=13 width=13>   ';
+      var row = '<tr><td>' + logo +  '<a id="link_' + lista_exchange[i] + '" href="' + lista_link[i] + '" target="_blank">' + lista_exchange[i] + '</td>\n<td>' + lista_compra[i] + '</td><td>' + lista_venta[i] + '</td></tr>';
       let html = document.getElementById("usdt_ars_table").innerHTML + row;
       document.getElementById("usdt_ars_table").innerHTML = html;
     }
@@ -472,6 +532,7 @@ function merval() {
       var lista_cambio = [];
       var lista_mktcap = [];
       var lista_link = [];
+      var lista_icon = [];
       const link_url = 'https://www.tradingview.com/symbols/BCBA-'
       const parser = new DOMParser();
       const htmlDoc = parser.parseFromString(data, 'text/html');
@@ -479,6 +540,7 @@ function merval() {
       const rows = table.rows;
       for (let i = 1; i < rows.length; i++) {
         const cells = rows[i].cells;
+        const icon = cells[0].firstChild.children[1].src;
         const accion = cells[0].firstChild.children[2].textContent;
         const mkt_cap = cells[1].textContent.slice(0, -4);
         const precio = cells[2].textContent.slice(0, -4);
@@ -491,7 +553,8 @@ function merval() {
         else {
           cambio = parseFloat(change)
         }
-        lista_accion.push(accion);;
+        lista_icon.push(icon);
+        lista_accion.push(accion);
         lista_mktcap.push(mkt_cap);
         lista_precio.push(precio);
         lista_cambio.push(cambio);
@@ -500,7 +563,9 @@ function merval() {
  
       function createTable3() {
         for (let i = 0; i < lista_accion.length; i++) {
-          var row = '<tr><td><a href="https://www.tradingview.com/symbols/BCBA-' + lista_accion[i] + '" target="_blank">' + lista_accion[i] + '</td><td>' + lista_precio[i] + '</td><td id="cambio">' + lista_cambio[i] + '</td><td id="mkt_cap">' + lista_mktcap[i] + '</td></tr>';
+          src = lista_icon[i];
+          logo = '<img src="' + src + '" height=12 width=12>   ';
+          var row = '<tr><td>' + logo +  '<a href="https://www.tradingview.com/symbols/BCBA-' + lista_accion[i] + '" target="_blank">' + lista_accion[i] + '</td><td>' + lista_precio[i] + '</td><td id="cambio">' + lista_cambio[i] + '</td><td id="mkt_cap">' + lista_mktcap[i] + '</td></tr>';
           let html = document.getElementById("tabla_merval").innerHTML + row;
           document.getElementById("tabla_merval").innerHTML = html;
         }

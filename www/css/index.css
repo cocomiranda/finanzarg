@@ -65,17 +65,10 @@ h1 {
     border-top: 1.5px solid white;
 }
 /* columna compra */
-.mystyle td:nth-child(2) {
-    /* column-width: 100px; */
-    /* background-color: #6B8068; */
-    border-top: 1.5px solid #6B8068;
+.mystyle td {
+    border-top: 0.5px solid #6B8068;
 }
-/* columna venta */
-.mystyle td:nth-child(3) {
-    /* column-width: 100px; */
-    /* background-color: #6B8068; */
-    border-top: 1.5px solid #6B8068;
-}
+
 /* primera celda */
 .mystyle th:first-child { 
 	background-color: white;
@@ -122,7 +115,7 @@ h1 {
     border-collapse: collapse; 
     text-align: center;
     height: 2575px;
-    border-bottom: 1px solid #000;
+    margin-bottom: 30px;
     width: 310px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -183,7 +176,7 @@ h1 {
     border-collapse: collapse; 
     text-align: center;
     width: 300px;
-    border-bottom: 1px solid #000;
+    margin-bottom: 30px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     height: 750px;
 }
@@ -292,10 +285,10 @@ a:hover {
 
 .dark th:first-child { 
 	background-color: #14202b;
-	border-top: 1px solid #14202b;
-	border-left: 1px solid #14202b;
+	border-top: 0.1px solid #14202b;
+	border-left: 0.1px solid #14202b;
     /* border-bottom: 1px solid #fff; */
-    border-right: 1px solid #14202b;
+    border-right: 0.1px solid #14202b;
 }
 
 .dark .igual {
@@ -350,7 +343,7 @@ a:hover {
     border-collapse: collapse; 
     text-align: center;
     margin-bottom: 30px;
-    height: 1750px;
+    height: 1600px;
     /* border-bottom: 1px solid #000; */
     width: 300px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -372,13 +365,16 @@ a:hover {
 
 /* tamaño de las columnas */
 .mystyle4 th:nth-child(1n) {
-    column-width: 70px;
-}
-.mystyle4 th:nth-child(2n) {
     column-width: 80px;
 }
-.mystyle4 th:nth-child(3n) {
+.mystyle4 th:nth-child(2n) {
     column-width: 60px;
+}
+.mystyle4 th:nth-child(3n) {
+    column-width: 45px;
+}
+.mystyle4 th:nth-child(4n) {
+    column-width: 50px;
 }
 .mystyle4 tr:last-child {
     border-bottom: 0.5px solid gray;
