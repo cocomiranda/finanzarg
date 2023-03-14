@@ -58,7 +58,7 @@ h1 {
 .mystyle tr:nth-child(10) {
     border-bottom: 1px solid white;
     /* padding: 5px; */
-    /* border: 1px solid #6B8068; */
+    border: 1px solid #6B8068;
 }
 /* primera columna */
 .mystyle td:first-child {
@@ -154,6 +154,9 @@ h1 {
 .mystyle2 th:nth-child(6n) {
     column-width: 50px;
 }
+.mystyle2 tr:last-child {
+    border-bottom: 1px solid #000;
+}
 /* primera fila */
 .mystyle2 th {
     background-color: black;
@@ -166,6 +169,7 @@ h1 {
 .mystyle2 [class='negativo'] { 
     color: #f6465d;
 }
+
 
 
 /*  ##################################################################  */
@@ -293,7 +297,6 @@ a:hover {
     /* border-bottom: 1px solid #fff; */
     border-right: 0.1px solid #14202b;
 }
-
 .dark .igual {
     color: white;
 }
@@ -306,11 +309,15 @@ a:hover {
     border-bottom: 1px solid white;
     color: white;
 }
+.dark .mystyle2 tr:last-child {
+    border-bottom: 1px solid #fff;
+}
+
 
 .dark .mystyle3 th {
     background-color: gray;
     border-right: 1px solid #14202b;
-    border-top: 0.5px solid white;
+    border-top: 0.5px solid #14202b;
     color: white;
 }
 
@@ -334,6 +341,13 @@ a:hover {
     color: #f6465d;
 }
 
+.dark .mystyle tr:nth-child(10) {
+    border-bottom: 1px solid #6B8068;
+    border: 1px solid #6B8068;
+}
+.dark .mystyle4 tbody:last-child {
+    border-bottom: 1px solid #fff;
+}
 
 /*  ##################################################################  */
 /*  ##################################################################  */
