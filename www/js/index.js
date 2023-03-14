@@ -543,6 +543,15 @@ function merval() {
         const icon = cells[0].firstChild.children[1].src;
         const accion = cells[0].firstChild.children[2].textContent;
         const mkt_cap = cells[1].textContent.slice(0, -4);
+        if (mkt_cap.includes("T")) {
+          var aux = mkt_cap.replace("T","000")
+          // console.log(aux)
+          var mkt_cap2 = parseFloat(aux * 1000)
+          // console.log(mkt_cap2)
+        }
+        else if (mkt_cap.includes("B")) {
+          var mkt_cap2 = parseFloat(mkt_cap.replace("B","")).toFixed(2)
+        }
         const precio = cells[2].textContent.slice(0, -4);
         const change = cells[3].textContent.slice(0, -1);
         const signo = change[0]
@@ -555,7 +564,7 @@ function merval() {
         }
         lista_icon.push(icon);
         lista_accion.push(accion);
-        lista_mktcap.push(mkt_cap);
+        lista_mktcap.push(mkt_cap2);
         lista_precio.push(precio);
         lista_cambio.push(cambio);
       }
@@ -767,7 +776,50 @@ function sortVentaUsdt() {
 }
 
 
-
+//////////////////////// ORDENA POR LA COLUMNA ACCION ////////////////////////
+document.body.addEventListener( 'click', function ( event ) {
+  if( event.target.id == 'sort_accion' ) {
+    sortAccion();
+  };
+} );
+function sortAccion() {
+	let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+	table = document.getElementById("tabla_merval");
+	switching = true;
+	dir = "asc";
+	while (switching) {
+	    switching = false;
+	    rows = table.rows;
+	    for (i = 1; i < (rows.length - 1); i++) {
+		    shouldSwitch = false;
+		    x = rows[i].getElementsByTagName("TD")[0];
+		    y = rows[i + 1].getElementsByTagName("TD")[0];
+	      	if (dir == "asc") {
+		       	if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+				    shouldSwitch = true;
+				    break;
+		        }
+	      	} 
+	      	else if (dir == "desc") {
+	        	if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+			        shouldSwitch = true;
+			        break;
+	        	}
+	      	}
+	    }
+	    if (shouldSwitch) {
+	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	      switching = true;
+	      switchcount ++;
+	    } 
+	    else {
+			if (switchcount == 0 && dir == "asc") {
+				dir = "desc";
+				switching = true;
+			}
+	    }
+  	}
+}
 //////////////////////// ORDENA POR LA COLUMNA %1d EN MERVAL ////////////////////////
 document.body.addEventListener( 'click', function ( event ) {
   if( event.target.id == 'sort_merval' ) {
@@ -786,6 +838,49 @@ function sortMerval() {
       shouldSwitch = false;
       x = rows[i].getElementsByTagName("TD")[2];
       y = rows[i + 1].getElementsByTagName("TD")[2];
+      if (dir == "desc") {
+          if (Number(x.innerHTML) < Number(y.innerHTML)) {
+          shouldSwitch = true;
+          break;
+          }
+        } 
+        else if (dir == "asc") {
+          if (Number(x.innerHTML) > Number(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount ++;
+    } 
+    else {
+      if (switchcount == 0 && dir == "desc") {
+          dir = "asc";
+          switching = true;
+        }
+    }
+  }
+}//////////////////////// ORDENA POR LA COLUMNA MKT CAP DE MERVAL ////////////////////////
+document.body.addEventListener( 'click', function ( event ) {
+  if( event.target.id == 'sort_cap' ) {
+    sortCap();
+  };
+} );
+function sortCap() {
+  let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("tabla_merval");
+  switching = true;
+  dir = "desc";
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[3];
+      y = rows[i + 1].getElementsByTagName("TD")[3];
       if (dir == "desc") {
           if (Number(x.innerHTML) < Number(y.innerHTML)) {
           shouldSwitch = true;
