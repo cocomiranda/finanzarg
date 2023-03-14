@@ -32,7 +32,7 @@ async function dolar() {
     navigator.userAgent.indexOf("Opera") > -1 ||
     navigator.userAgent.indexOf("Firefox") > -1 ||
     navigator.userAgent.indexOf("Macintosh") > -1) {
-      var sistema = 'web'
+    var sistema = 'web'  
   }
   let system = document.getElementById('pagina')
   system.classList.add(sistema);

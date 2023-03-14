@@ -10,16 +10,19 @@
     zoom: 3;
 }
 .web {
-    zoom: 1;
+    zoom: 1.5;
+    max-width: fit-content;
+    margin: auto;
 }
 
 
 h1 {
     font-family: "Futura";
     font-size: 20px;
-    top: 35px;
-    left: 128px;
-    margin: 0;
+    top: 22px;
+    margin-left: 120px;
+    /* max-width: fit-content;
+    margin: auto; */
     transform: translate(-50%, -50%);
     position: absolute;
     color: #71a7d8;
@@ -29,7 +32,7 @@ h1:before {
     content: attr(data-heading);
     overflow: hidden;
     position: absolute;
-    left: 0;
+    left: 0%;
     top: 0;
     width: 59%;
     color: #fff;
