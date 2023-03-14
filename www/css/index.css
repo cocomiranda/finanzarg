@@ -15,7 +15,7 @@
     margin: auto;
 }
 
-
+/* titulo finanzARG */
 h1 {
     font-family: "Futura";
     font-size: 20px;
@@ -56,7 +56,7 @@ h1 {
 
 /* ultima linea */
 .mystyle tr:nth-child(10) {
-    border-bottom: 1px solid #6B8068;
+    border-bottom: 1px solid white;
     /* padding: 5px; */
     /* border: 1px solid #6B8068; */
 }
@@ -65,7 +65,7 @@ h1 {
     /* column-width: 100px; */
     background-color: #6B8068;
     color: white;
-    border-top: 1.5px solid white;
+    border-top: 0.5px solid white;
 }
 /* columna compra */
 .mystyle td {
@@ -186,7 +186,7 @@ h1 {
 /* primera fila */
 .mystyle3 th {
     background-color: black;
-    border-bottom: 1px solid greyred;
+    /* border-bottom: 1px solid red; */
     color: white;
 }
 /* filas */
@@ -302,14 +302,15 @@ a:hover {
 .dark .mystyle2 th {
     background-color: gray;
     border-right: 1px solid #14202b;
-    border-bottom: 2px solid 14202b;
+    border-top: 0.5px solid #14202b;
+    border-bottom: 1px solid white;
     color: white;
 }
 
 .dark .mystyle3 th {
     background-color: gray;
     border-right: 1px solid #14202b;
-    /* border-bottom: 1px solid white; */
+    border-top: 0.5px solid white;
     color: white;
 }
 

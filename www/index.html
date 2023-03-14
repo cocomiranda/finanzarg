@@ -56,11 +56,13 @@
 	<!-- <div id="navbar" style="display: none;" class="navbar">
 		<img src="img/logo.png" style="height: 50px; width: 50px; border-radius: 40%; vertical-align: middle;">&nbsp;&nbsp;&nbsp;FinanzARG
 	</div> -->
-	<div class="tab" style="margin-left: 10px; margin-top: 5%; display: none;" id="botones">
+	<div class="tab" style="margin-left: 20px; display: none;" id="botones">
 		<button class="tablinks" id="btnDolar" style="display: inline;">DOLAR</button>
-		<button class="tablinks" id="btnCripto" style="display: inline;">CRIPTO</button>
-		<button class="tablinks" id="btnUsdt" style="display: inline;">USDT/USDC</button>
-		<button class="tablinks" id="btnMerval" style="display: inline;">MERVAL</button>
+		<button class="tablinks" id="btnCripto" style="display: inline;">CRIPTOMONEDAS</button>
+		<button class="tablinks" id="btnUsdt" style="display: inline;">USDT/ARS</button>
+		<br>
+		<button class="tablinks" id="btnMerval" style="display: inline; margin-left: 55px; top: -12px;">MERVAL</button>
+		<button class="tablinks" id="btnNasdaq" style="display: inline; top: -12px;">NASDAQ</button>
 	</div>
 
 </head>
@@ -127,7 +129,7 @@
 					<th id="sort_accion">ACCION</th>
 					<th>PRECIO (ARS)</th>
 					<th id="sort_merval">% 1d</th>
-					<th id="sort_cap">MKT CAP <br> (B. ARS)</th>
+					<th id="sort_cap">MKT CAP <br> (BILL ARS)</th>
 				</tr>
 			</thead>
 			<tbody>	
@@ -136,6 +138,22 @@
 	</div>
 </body>
 
+<body id="body_nasdaq" class="dark" style="margin-bottom: 50px">
+	<div>
+		<table class="mystyle4" id="tabla_nasdaq" style="display: none; margin-left: 5px; ">
+			<thead>
+				<tr style="text-align: center;" class="tr1">
+					<th id="sort_stock">ACCION</th>
+					<th>PRECIO (USD)</th>
+					<th id="sort_nasdaq">% 1d</th>
+					<th id="sort_mktcap">MKT CAP <br> (BILL USD)</th>
+				</tr>
+			</thead>
+			<tbody>	
+			</tbody>
+		
+	</div>
+</body>
 
 <script src="js/index.js" type="application/javascript"></script>
 

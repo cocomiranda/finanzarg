@@ -550,9 +550,9 @@ function merval() {
           // console.log(mkt_cap2)
         }
         else if (mkt_cap.includes("B")) {
-          var mkt_cap2 = parseFloat(mkt_cap.replace("B","")).toFixed(2)
+          var mkt_cap2 = parseFloat(mkt_cap.replace("B","")).toFixed(1)
         }
-        const precio = cells[2].textContent.slice(0, -4);
+        const precio = parseFloat(cells[2].textContent.slice(0, -4)).toFixed(1);
         const change = cells[3].textContent.slice(0, -1);
         const signo = change[0]
         if (isNaN(signo)) {
@@ -574,7 +574,7 @@ function merval() {
         for (let i = 0; i < lista_accion.length; i++) {
           src = lista_icon[i];
           logo = '<img src="' + src + '" height=12 width=12>   ';
-          var row = '<tr><td>' + logo +  '<a href="https://www.tradingview.com/symbols/BCBA-' + lista_accion[i] + '" target="_blank">' + lista_accion[i] + '</td><td>' + lista_precio[i] + '</td><td id="cambio">' + lista_cambio[i] + '</td><td id="mkt_cap">' + lista_mktcap[i] + '</td></tr>';
+          var row = '<tr><td>' + logo +  '<a href="https://www.rava.com/perfil/' + lista_accion[i] + '" target="_blank">' + lista_accion[i] + '</td><td>$ ' + lista_precio[i] + '</td><td id="cambio">' + lista_cambio[i] + '</td><td id="mkt_cap">' + lista_mktcap[i] + '</td></tr>';
           let html = document.getElementById("tabla_merval").innerHTML + row;
           document.getElementById("tabla_merval").innerHTML = html;
         }
@@ -598,6 +598,85 @@ function merval() {
 merval()
 
 
+
+function nasdaq() {
+  const url_cors = 'https://cors.eu.org/';
+  // const url_rava = 'https://www.rava.com/';
+  // const url_bolsar = 'https://bolsar.info/lideres.php'
+  // const url_byma = 'https://open.bymadata.com.ar/#/local-stocks-adrs'
+  const url_tview = 'https://www.tradingview.com/markets/stocks-usa/market-movers-large-cap/'
+
+  fetch(url_cors + url_tview)
+    .then(response => response.text())
+    .then(data => {
+      var lista_accion = [];
+      var lista_precio = [];
+      var lista_cambio = [];
+      var lista_mktcap = [];
+      var lista_link = [];
+      var lista_icon = [];
+      const link_url = 'https://www.tradingview.com/symbols/BCBA-'
+      const parser = new DOMParser();
+      const htmlDoc = parser.parseFromString(data, 'text/html');
+      const table = htmlDoc.querySelector('table');
+      const rows = table.rows;
+      for (let i = 1; i < rows.length; i++) {
+        const cells = rows[i].cells;
+        const icon = cells[0].firstChild.children[1].src;
+        const accion = cells[0].firstChild.children[2].textContent;
+        const mkt_cap = cells[1].textContent.slice(0, -4);
+        if (mkt_cap.includes("T")) {
+          var aux = mkt_cap.replace("T","000")
+          var mkt_cap2 = parseFloat(aux * 1000)
+        }
+        else if (mkt_cap.includes("B")) {
+          var mkt_cap2 = parseFloat(mkt_cap.replace("B","")).toFixed(1)
+        }
+        const precio = parseFloat(cells[2].textContent.slice(0, -4)).toFixed(1);
+        const change = cells[3].textContent.slice(0, -1);
+        const signo = change[0]
+        if (isNaN(signo)) {
+          cambio = parseFloat(change.substring(1))
+          cambio = -cambio
+        }
+        else {
+          cambio = parseFloat(change)
+        }
+        lista_icon.push(icon);
+        lista_accion.push(accion);
+        lista_mktcap.push(mkt_cap2);
+        lista_precio.push(precio);
+        lista_cambio.push(cambio);
+      }
+
+ 
+      function createTable4() {
+        for (let i = 0; i < lista_accion.length; i++) {
+          src = lista_icon[i];
+          logo = '<img src="' + src + '" height=12 width=12>   ';
+          var row = '<tr><td>' + logo +  '<a href="https://www.tradingview.com/symbols/NASDAQ-' + lista_accion[i] + '" target="_blank">' + lista_accion[i] + '</td><td>$ ' + lista_precio[i] + '</td><td id="cambio">' + lista_cambio[i] + '</td><td id="mkt_cap">' + lista_mktcap[i] + '</td></tr>';
+          let html = document.getElementById("tabla_nasdaq").innerHTML + row;
+          document.getElementById("tabla_nasdaq").innerHTML = html;
+        }
+      }
+      createTable4();
+
+      function addClass() {
+        let hour = document.querySelectorAll("[id^='cambio']");
+        for (let i = 0; i < hour.length; i++) {
+          if (hour[i].textContent >= 0) {
+            hour[i].classList.add("positivo");
+          }
+          if (hour[i].textContent < 0) {
+            hour[i].classList.add("negativo");
+          }
+        }
+      }
+      addClass();
+    })
+}
+nasdaq()
+
 /*  #######################################################################################################  */
 /*  #######################################################################################################  */
 /*  #######################################################################################################  */
@@ -611,6 +690,8 @@ let boton_dolar = document.getElementById("btnDolar");
 boton_dolar.addEventListener("click", toggle_dolar);
 let boton_merval = document.getElementById("btnMerval");
 boton_merval.addEventListener("click", toggle_merval);
+let boton_nasdaq = document.getElementById("btnNasdaq");
+boton_nasdaq.addEventListener("click", toggle_nasdaq);
 
 function toggle_cripto() {
   let body_dolar = document.getElementById("tbody_dolar");
@@ -636,11 +717,14 @@ function toggle_usdt() {
   body_usdt.style.display = "block";
   let body_merval = document.getElementById("tabla_merval");
   body_merval.style.display = "none";
+  let body_nasdaq = document.getElementById("tabla_nasdaq");
+  body_nasdaq.style.display = "none";
 
   boton_dolar.style.opacity = '1';
   boton_cripto.style.opacity = '1';
   boton_usdt.style.opacity = '0.5';
   boton_merval.style.opacity = "1";
+  boton_nasdaq.style.opacity = "1";
 }
 function toggle_dolar() {
   let body_dolar = document.getElementById("tbody_dolar");
@@ -651,13 +735,15 @@ function toggle_dolar() {
   body_usdt.style.display = "none";
   let body_merval = document.getElementById("tabla_merval");
   body_merval.style.display = "none";
+  let body_nasdaq = document.getElementById("tabla_nasdaq");
+  body_nasdaq.style.display = "none";
 
   boton_dolar.style.opacity = '0.5';
   boton_cripto.style.opacity = '1';
   boton_usdt.style.opacity = '1';
   boton_merval.style.opacity = "1";
+  boton_nasdaq.style.opacity = "1";
 }
-
 function toggle_merval() {
   let body_dolar = document.getElementById("tbody_dolar");
   body_dolar.style.display = "none";
@@ -667,11 +753,32 @@ function toggle_merval() {
   body_usdt.style.display = "none";
   let body_merval = document.getElementById("tabla_merval");
   body_merval.style.display = "block";
+  let body_nasdaq = document.getElementById("tabla_nasdaq");
+  body_nasdaq.style.display = "none";
 
   boton_dolar.style.opacity = '1';
   boton_cripto.style.opacity = '1';
   boton_usdt.style.opacity = '1';
   boton_merval.style.opacity = "0.5";
+  boton_nasdaq.style.opacity = "1";
+}
+function toggle_nasdaq() {
+  let body_dolar = document.getElementById("tbody_dolar");
+  body_dolar.style.display = "none";
+  let body_cripto = document.getElementById("tabla_cripto");
+  body_cripto.style.display = "none";
+  let body_usdt = document.getElementById("usdt_ars_table");
+  body_usdt.style.display = "none";
+  let body_merval = document.getElementById("tabla_merval");
+  body_merval.style.display = "none";
+  let body_nasdaq = document.getElementById("tabla_nasdaq");
+  body_nasdaq.style.display = "block";
+
+  boton_dolar.style.opacity = '1';
+  boton_cripto.style.opacity = '1';
+  boton_usdt.style.opacity = '1';
+  boton_merval.style.opacity = "1";
+  boton_nasdaq.style.opacity = "0.5";
 }
 
 
@@ -1079,4 +1186,137 @@ function sortWeek() {
 	      	}
 	    }
   	}
+}
+
+
+//////////////////////// ORDENA POR LA COLUMNA ACCION NASDAQ////////////////////////
+document.body.addEventListener( 'click', function ( event ) {
+  if( event.target.id == 'sort_stock' ) {
+    sortStock();
+  };
+} );
+function sortStock() {
+	let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+	table = document.getElementById("tabla_nasdaq");
+	switching = true;
+	dir = "asc";
+	while (switching) {
+	    switching = false;
+	    rows = table.rows;
+	    for (i = 1; i < (rows.length - 1); i++) {
+		    shouldSwitch = false;
+		    x = rows[i].getElementsByTagName("TD")[0];
+		    y = rows[i + 1].getElementsByTagName("TD")[0];
+	      	if (dir == "asc") {
+		       	if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+				    shouldSwitch = true;
+				    break;
+		        }
+	      	} 
+	      	else if (dir == "desc") {
+	        	if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+			        shouldSwitch = true;
+			        break;
+	        	}
+	      	}
+	    }
+	    if (shouldSwitch) {
+	      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+	      switching = true;
+	      switchcount ++;
+	    } 
+	    else {
+			if (switchcount == 0 && dir == "asc") {
+				dir = "desc";
+				switching = true;
+			}
+	    }
+  	}
+}
+//////////////////////// ORDENA POR LA COLUMNA %1d EN MERVAL ////////////////////////
+document.body.addEventListener( 'click', function ( event ) {
+  if( event.target.id == 'sort_nasdaq' ) {
+    sortNasdaq();
+  };
+} );
+function sortNasdaq() {
+  let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("tabla_nasdaq");
+  switching = true;
+  dir = "desc";
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[2];
+      y = rows[i + 1].getElementsByTagName("TD")[2];
+      if (dir == "desc") {
+          if (Number(x.innerHTML) < Number(y.innerHTML)) {
+          shouldSwitch = true;
+          break;
+          }
+        } 
+        else if (dir == "asc") {
+          if (Number(x.innerHTML) > Number(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount ++;
+    } 
+    else {
+      if (switchcount == 0 && dir == "desc") {
+          dir = "asc";
+          switching = true;
+        }
+    }
+  }
+}//////////////////////// ORDENA POR LA COLUMNA MKT CAP DE MERVAL ////////////////////////
+document.body.addEventListener( 'click', function ( event ) {
+  if( event.target.id == 'sort_mktcap' ) {
+    sortMktcap();
+  };
+} );
+function sortMktcap() {
+  let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("tabla_nasdaq");
+  switching = true;
+  dir = "desc";
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 1; i < (rows.length - 1); i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[3];
+      y = rows[i + 1].getElementsByTagName("TD")[3];
+      if (dir == "desc") {
+          if (Number(x.innerHTML) < Number(y.innerHTML)) {
+          shouldSwitch = true;
+          break;
+          }
+        } 
+        else if (dir == "asc") {
+          if (Number(x.innerHTML) > Number(y.innerHTML)) {
+            shouldSwitch = true;
+            break;
+          }
+        }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      switchcount ++;
+    } 
+    else {
+      if (switchcount == 0 && dir == "desc") {
+          dir = "asc";
+          switching = true;
+        }
+    }
+  }
 }
