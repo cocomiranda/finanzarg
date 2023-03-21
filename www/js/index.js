@@ -627,11 +627,12 @@ function nasdaq() {
         const mkt_cap = cells[1].textContent.slice(0, -4);
         if (mkt_cap.includes("T")) {
           var aux = mkt_cap.replace("T","000")
-          var mkt_cap2 = parseFloat(aux * 1000)
+          var mkt_cap2 = parseFloat(aux * 1000).toFixed(0)
         }
         else if (mkt_cap.includes("B")) {
           var mkt_cap2 = parseFloat(mkt_cap.replace("B","")).toFixed(1)
         }
+        console.log(mkt_cap2)
         const precio = parseFloat(cells[2].textContent.slice(0, -4)).toFixed(1);
         const change = cells[3].textContent.slice(0, -1);
         const signo = change[0]
