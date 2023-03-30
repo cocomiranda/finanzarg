@@ -2,7 +2,7 @@
 
 La app que no sabías que necesitabas:
 
-✨https://finanzarg.vercel.app/✨
+✨ https://finanzarg.vercel.app/ ✨
 
 - cotizaciones dólar.
 - precios criptomonedas.
