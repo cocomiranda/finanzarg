@@ -147,15 +147,14 @@ async function dolar() {
     body = document.createElement('tbody_dolar');
     var oficial = '<tr><td>OFICIAL</td>\n<td id="compra">$ ' + oficial_compra + '</td><td id="venta">$ ' + oficial_venta + '</td><td id="cambio">' + oficial_cambio + '</td></tr>';
     var informal = '<tr><td>INFORMAL</td>\n<td id="compra">$ ' + informal_compra + '</td><td id="venta">$ ' + informal_venta + '</td><td id="cambio">' + informal_cambio + '</td></tr>';
-    var ahorro = '<tr><td>AHORRO</td>\n<td id="compra">' + '-' + '</td><td id="venta">$ ' + ahorro_venta + '</td><td id="cambio">' + ahorro_cambio + '</td></tr>';
-    var turista = '<tr><td>TURISTA</td>\n<td id="compra">' + '-' + '</td><td id="venta">$ ' + turista_venta + '</td><td id="cambio">' + turista_cambio + '</td></tr>';
+    var tarjeta = '<tr><td>AHORRO</td>\n<td id="compra">' + '-' + '</td><td id="venta">$ ' + ahorro_venta + '</td><td id="cambio">' + ahorro_cambio + '</td></tr>';
     var qatar = '<tr><td>QATAR</td>\n<td id="compra">' + '-' + '</td><td id="venta">$ ' + qatar_venta + '</td><td id="cambio">' + qatar_cambio + '</td></tr>';
     var ccl = '<tr><td>CCL</td>\n<td id="compra">$ ' + ccl_compra + '</td><td id="venta">$ ' + ccl_venta + '</td><td id="cambio">' + ccl_cambio + '</td></tr>';
     var mep = '<tr><td>MEP</td>\n<td id="compra">$ ' + mep_compra + '</td><td id="venta">$ ' + mep_venta + '</td><td id="cambio">' + mep_cambio + '</td></tr>';
     var mayorista = '<tr><td>MAYORISTA</td>\n<td id="compra">$ ' + mayorista_compra + '</td><td id="venta">$ ' + mayorista_venta + '</td><td id="cambio">' + mayorista_cambio + '</td></tr>';
     var cripto = '<tr><td>CRIPTO</td>\n<td id="compra">$ ' + cripto_compra + '</td><td id="venta">$ ' + cripto_venta + '</td><td id="cambio">' + cripto_cambio + '</td></tr>';
     
-    var html = document.getElementById("tbody_dolar").innerHTML + oficial + informal + ahorro + turista + qatar + ccl + mep + mayorista + cripto
+    var html = document.getElementById("tbody_dolar").innerHTML + oficial + informal + tarjeta + qatar + ccl + mep + mayorista + cripto
     document.getElementById("tbody_dolar").innerHTML = html;
   }
   createTable();
@@ -552,8 +551,8 @@ function merval() {
         else if (mkt_cap.includes("B")) {
           var mkt_cap2 = parseFloat(mkt_cap.replace("B","")).toFixed(1)
         }
-        const precio = parseFloat(cells[2].textContent.slice(0, -4)).toFixed(1);
-        const change = cells[3].textContent.slice(0, -1);
+        const precio = parseFloat(cells[3].textContent.slice(0, -4)).toFixed(1);
+        const change = cells[4].textContent.slice(0, -1);
         const signo = change[0]
         if (isNaN(signo)) {
           cambio = parseFloat(change.substring(1))
@@ -632,9 +631,8 @@ function nasdaq() {
         else if (mkt_cap.includes("B")) {
           var mkt_cap2 = parseFloat(mkt_cap.replace("B","")).toFixed(1)
         }
-        console.log(mkt_cap2)
-        const precio = parseFloat(cells[2].textContent.slice(0, -4)).toFixed(1);
-        const change = cells[3].textContent.slice(0, -1);
+        const precio = parseFloat(cells[3].textContent.slice(0, -4)).toFixed(1);
+        const change = cells[4].textContent.slice(0, -1);
         const signo = change[0]
         if (isNaN(signo)) {
           cambio = parseFloat(change.substring(1))
