@@ -551,8 +551,8 @@ function merval() {
         else if (mkt_cap.includes("B")) {
           var mkt_cap2 = parseFloat(mkt_cap.replace("B","")).toFixed(1)
         }
-        const precio = parseFloat(cells[3].textContent.slice(0, -4)).toFixed(1);
-        const change = cells[4].textContent.slice(0, -1);
+        const precio = parseFloat(cells[2].textContent.slice(0, -4)).toFixed(1);
+        const change = cells[3].textContent.slice(0, -1);
         const signo = change[0]
         if (isNaN(signo)) {
           cambio = parseFloat(change.substring(1))
@@ -631,8 +631,8 @@ function nasdaq() {
         else if (mkt_cap.includes("B")) {
           var mkt_cap2 = parseFloat(mkt_cap.replace("B","")).toFixed(1)
         }
-        const precio = parseFloat(cells[3].textContent.slice(0, -4)).toFixed(1);
-        const change = cells[4].textContent.slice(0, -1);
+        const precio = parseFloat(cells[2].textContent.slice(0, -4)).toFixed(1);
+        const change = cells[3].textContent.slice(0, -1);
         const signo = change[0]
         if (isNaN(signo)) {
           cambio = parseFloat(change.substring(1))
